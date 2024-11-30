@@ -7,6 +7,8 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 import vn.kietnguyendev.tymexhometest.data.network.UserApi
+import vn.kietnguyendev.tymexhometest.data.repository.UserRepositoryImpl
+import vn.kietnguyendev.tymexhometest.domain.repository.UserRepository
 
 val dataModule = module {
     single {
@@ -19,5 +21,9 @@ val dataModule = module {
 
     single {
         UserApi(get())
+    }
+
+    single<UserRepository> {
+        UserRepositoryImpl(get())
     }
 }

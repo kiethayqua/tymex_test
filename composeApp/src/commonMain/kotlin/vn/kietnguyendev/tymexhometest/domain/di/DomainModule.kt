@@ -1,11 +1,10 @@
 package vn.kietnguyendev.tymexhometest.domain.di
 
 import org.koin.dsl.module
-import vn.kietnguyendev.tymexhometest.data.repository.UserRepositoryImpl
-import vn.kietnguyendev.tymexhometest.domain.repository.UserRepository
+import vn.kietnguyendev.tymexhometest.domain.usecase.GetUserDetailUseCase
+import vn.kietnguyendev.tymexhometest.domain.usecase.GetUsersUseCase
 
 val domainModule = module {
-    single<UserRepository> {
-        UserRepositoryImpl(get())
-    }
+    factory { GetUsersUseCase(get()) }
+    factory { GetUserDetailUseCase(get()) }
 }

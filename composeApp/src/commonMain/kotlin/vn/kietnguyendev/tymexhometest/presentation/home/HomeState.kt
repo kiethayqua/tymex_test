@@ -5,5 +5,6 @@ import vn.kietnguyendev.tymexhometest.domain.model.User
 data class HomeState(
     val isLoading: Boolean = false,
     val data: List<User> = emptyList(),
-    val page: Int = 1
+    val page: Int = 0,
+    val isLoadingMore: Boolean = false
 )

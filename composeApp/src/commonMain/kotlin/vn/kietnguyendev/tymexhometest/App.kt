@@ -5,14 +5,14 @@ import androidx.compose.runtime.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import vn.kietnguyendev.tymexhometest.di.koinConfig
-import vn.kietnguyendev.tymexhometest.presentation.home.HomeScreen
+import vn.kietnguyendev.tymexhometest.presentation.navigation.AppNav
 
 @Composable
 @Preview
 fun App() {
     KoinApplication(application = koinConfig) {
         MaterialTheme {
-            HomeScreen()
+            AppNav()
         }
     }
 }

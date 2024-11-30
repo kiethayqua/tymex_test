@@ -1,0 +1,7 @@
+<resources>
+    <string name="home_title">Github Users</string>
+    <string name="user_detail_title">User Detail</string>
+    <string name="follower">Follower</string>
+    <string name="following">Following</string>
+    <string name="blog">Blog</string>
+</resources>

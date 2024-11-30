@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import vn.kietnguyendev.tymexhometest.domain.repository.UserRepository
+import vn.kietnguyendev.tymexhometest.domain.usecase.GetUsersUseCase
+import vn.kietnguyendev.tymexhometest.util.Constants
 
-class HomeViewModel(private val userRepository: UserRepository): ViewModel() {
+class HomeViewModel(private val getUsersUseCase: GetUsersUseCase) : ViewModel() {
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
@@ -18,18 +19,35 @@ class HomeViewModel(private val userRepository: UserRepository): ViewModel() {
         getUsers()
     }
 
-    fun getUsers(page: Int = 1) {
+    fun getUsers(isLoadMore: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
-            _state.update {
-                it.copy(isLoading = true)
+            updateLoading(isLoadMore, true)
+
+            val users = getUsersUseCase(perPage = Constants.USERS_PER_PAGE, since = _state.value.page * Constants.USERS_PER_PAGE)
+
+            if (users.isNotEmpty()) {
+                val newData = _state.value.data + users
+                val newPage = _state.value.page + 1
+                _state.update {
+                    it.copy(
+                        data = newData,
+                        page = newPage
+                    )
+                }
             }
-            val users = userRepository.getUsers(perPage = 20, since = page)
+
+            updateLoading(isLoadMore, false)
+        }
+    }
+
+    private fun updateLoading(isLoadMore: Boolean, status: Boolean) {
+        if (isLoadMore) {
             _state.update {
-                it.copy(
-                    isLoading = false,
-                    data = users,
-                    page = page
-                )
+                it.copy(isLoadingMore = status)
+            }
+        } else {
+            _state.update {
+                it.copy(isLoading = status)
             }
         }
     }
