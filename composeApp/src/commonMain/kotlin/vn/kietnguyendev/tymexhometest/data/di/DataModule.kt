@@ -1,6 +1,8 @@
 package vn.kietnguyendev.tymexhometest.data.di
 
+import com.vipulasri.kachetor.KachetorStorage
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
@@ -15,6 +17,9 @@ val dataModule = module {
         HttpClient {
             install(ContentNegotiation) {
                 json(json = Json { ignoreUnknownKeys = true }, contentType = ContentType.Any)
+            }
+            install(HttpCache) {
+                publicStorage(KachetorStorage(10 * 1024 * 1024))
             }
         }
     }
