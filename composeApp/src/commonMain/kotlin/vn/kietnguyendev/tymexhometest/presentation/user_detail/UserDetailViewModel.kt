@@ -1,6 +1,5 @@
 package vn.kietnguyendev.tymexhometest.presentation.user_detail
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
